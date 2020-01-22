@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
         MakeLevel();
         string songlocation = foldername + "/song.wav";
         StartCoroutine(LoadAudio(songlocation, song));
-        Time.timeScale = 1;
 
     }
 
