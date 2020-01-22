@@ -1,0 +1,17 @@
+1.	VOICE RECOGNISION	(Vos || Evan)
+
+2.	het eerste level moet af	(Jeppe?)
+
+3.	zorgvoor een loading screen		(?)
+
+4.	een optie menu		(Jeppe)
+
+5.	een end screen		(?)
+
+6.	art in een level	(William)
+
+7.	High scores weet ik niet hoe ver we zijn	(Koen)
+
+8.	effecten als je een streak van 4 hebt		(?)
+
+9.	credits		(?)
