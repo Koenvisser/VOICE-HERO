@@ -104,11 +104,10 @@ public class LevelEditor : MonoBehaviour
     public void TestLevel() {
         CopyFiles(Application.dataPath + "/Levels/LevelEditor/");
         PlayerPrefs.SetString("currentLevel", "LevelEditor");
-        SceneManager.LoadScene("Level 1");
     }
 
     public void Reset() {
-        Application.LoadLevel(Application.loadedLevel);
+        SceneManager.LoadScene("Leveleditor");
     }
 
     public void SaveLevel() {
@@ -175,6 +174,39 @@ public class LevelEditor : MonoBehaviour
 
     public void PauseAudio()
     { song.Pause(); }
+
+    public void UploadLevel() {
+        StartCoroutine(Upload());
+    }
+
+    private IEnumerator Upload() {
+        string textpath = Application.dataPath + "/Levels/" + NameInputField.GetComponent<TMP_InputField>().text + "/level.txt";
+        if (!File.Exists(textpath))
+        {
+            SaveLevel();
+        }
+        string[] path = new string[2];
+        path[0] = textpath;
+        path[1] = songlocation;
+
+        UnityWebRequest[] files = new UnityWebRequest[path.Length];
+        WWWForm form = new WWWForm();
+
+        for (int i = 0; i < files.Length; i++)
+        {
+            files[i] = UnityWebRequest.Get(path[i]);
+            yield return files[i].SendWebRequest();
+            form.AddBinaryData("files[]", files[i].downloadHandler.data, Path.GetFileName(path[i]));
+        }
+
+        UnityWebRequest req = UnityWebRequest.Post("https://www.cdprojektblue.com/levels/upload.php", form);
+        yield return req.SendWebRequest();
+
+        if (req.isHttpError || req.isNetworkError)
+            Debug.Log(req.error);
+        else
+            Debug.Log("Uploaded " + files.Length + " files Successfully");
+    }
 
     private void Update()
     {
