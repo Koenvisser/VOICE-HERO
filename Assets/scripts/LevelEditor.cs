@@ -191,12 +191,12 @@ public class LevelEditor : MonoBehaviour
 
         UnityWebRequest[] files = new UnityWebRequest[path.Length];
         WWWForm form = new WWWForm();
-
+        form.AddField("levelname", NameInputField.GetComponent<TMP_InputField>().text);
         for (int i = 0; i < files.Length; i++)
         {
             files[i] = UnityWebRequest.Get(path[i]);
             yield return files[i].SendWebRequest();
-            form.AddBinaryData("files[]", files[i].downloadHandler.data, Path.GetFileName(path[i]));
+            form.AddBinaryData("files", files[i].downloadHandler.data, Path.GetFileName(path[i]));
         }
 
         UnityWebRequest req = UnityWebRequest.Post("https://www.cdprojektblue.com/levels/upload.php", form);
