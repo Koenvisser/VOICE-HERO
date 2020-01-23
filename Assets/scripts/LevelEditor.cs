@@ -25,13 +25,8 @@ public class LevelEditor : MonoBehaviour
     public GameObject BlueButton;
     public AudioSource song;
     private string songlocation = "";
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    IEnumerator ImportAudio(string songlocation, AudioSource audiosource) {
+    private IEnumerator ImportAudio(string songlocation, AudioSource audiosource) {
         using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(songlocation, AudioType.WAV))
         {
             yield return www.SendWebRequest();
@@ -134,7 +129,7 @@ public class LevelEditor : MonoBehaviour
         }
         }
 
-    string CreateLevelText() {
+    private string CreateLevelText() {
         string leveltext = "r\n";
         redlist.Sort();
         yellowlist.Sort();
