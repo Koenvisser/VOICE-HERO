@@ -37,6 +37,7 @@ public class ScoreSetGet : MonoBehaviour
     {
         int score = Int32.Parse(Highscorescore.GetComponent<TextMeshProUGUI>().text);
         string name = InputField.GetComponent<TMP_InputField>().text;
+        PlayerPrefs.SetString("ScoreName", name);
         string level = "";
         if (PlayerPrefs.HasKey("currentLevel"))
         {

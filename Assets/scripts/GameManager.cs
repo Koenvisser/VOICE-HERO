@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject GameScore;
     public GameObject EndScore;
-
+    public GameObject ScoreName;
 
     public List<string> levelStringList = new List<string>();
     private string levelname = "";
@@ -186,6 +186,10 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0;
             song.Pause();
             EndScore.GetComponent<TextMeshProUGUI>().text = GameScore.GetComponent<Text>().text.Replace("Score ", "");
+            if (PlayerPrefs.HasKey("ScoreName"))
+            {
+                ScoreName.GetComponent<TMP_InputField>().text = PlayerPrefs.GetString("ScoreName");
+            }
         }
     }
 
