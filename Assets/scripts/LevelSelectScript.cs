@@ -64,11 +64,7 @@ public class LevelSelectScript : MonoBehaviour
         //loads the main game
         SceneManager.LoadScene("Level 1");
     }
-
-    public void GetLevel()
-    {
-        SceneManager.LoadScene("Leveleditor");
-    }
+    
 
     public void Quit()
     {

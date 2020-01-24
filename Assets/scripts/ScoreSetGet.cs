@@ -48,7 +48,7 @@ public class ScoreSetGet : MonoBehaviour
         }
         StartCoroutine(PostScores(name,score,level));
     }
-    IEnumerator PostScores(string name, int score, string level)
+    private IEnumerator PostScores(string name, int score, string level)
     {
         StatusText.SetActive(true);
         string addScoreURL = "https://www.cdprojektblue.com/scores/addscores.php";
@@ -73,7 +73,7 @@ public class ScoreSetGet : MonoBehaviour
     }
     bool executed = false;
     // Get the scores from the MySQL DB to display in a GUIText.
-    public IEnumerator GetScores(string level)
+    private IEnumerator GetScores(string level)
     {
         string highscoreURL = "https://www.cdprojektblue.com/scores/getscores.php";
         busy = true;
@@ -129,7 +129,7 @@ public class ScoreSetGet : MonoBehaviour
     }
 
     //Delete the highscores if they need to be replaced
-    void DestroyHighscore() {
+    private void DestroyHighscore() {
         GameObject[] hi_destroy;
 
         hi_destroy = GameObject.FindGameObjectsWithTag("Highscore");
@@ -141,7 +141,7 @@ public class ScoreSetGet : MonoBehaviour
     }
 
 
-    public string Md5Sum(string strToEncrypt)
+    private string Md5Sum(string strToEncrypt)
     {
         System.Text.UTF8Encoding ue = new System.Text.UTF8Encoding();
         byte[] bytes = ue.GetBytes(strToEncrypt);
