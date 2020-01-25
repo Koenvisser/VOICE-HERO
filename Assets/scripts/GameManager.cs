@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene("Menu");
         }
         //get the folder location of the level that has been selected, which must contain a level.txt file and a song.wav file
-        string foldername = Application.dataPath + "/levels/" + levelname;
+        string foldername = Application.dataPath + "/Levels/" + levelname;
         Readfile(foldername + "/level.txt");
         MakeLevel();
         string songlocation = foldername + "/song.wav";
