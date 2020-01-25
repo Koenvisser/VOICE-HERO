@@ -29,6 +29,11 @@ public class OptionMenu : MonoBehaviour
         resolutionDropdown.AddOptions(options);
     }
     
+    public void SetResolution (int resloutionIndex)
+    {
+        Resolution resolution = resolutions[resloutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
+    }
     // Here we change the overal volume of the game
     public void SetVolume(float volume)
     {
