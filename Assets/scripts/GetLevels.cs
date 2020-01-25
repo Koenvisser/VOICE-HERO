@@ -37,14 +37,14 @@ public class GetLevels : MonoBehaviour
             // Show results as text
             string result = lvl_get.downloadHandler.text;
             string[] results = result.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            int posy = 50;
+            int posy = 0;
             GameObject lvl_text;
             foreach (string s in results)
             {
                     lvl_text = Instantiate(ButtonPrefab, new Vector3(Content.transform.position.x, Content.transform.position.y, Content.transform.position.z), Quaternion.identity, Content.transform);
                 StartCoroutine(Position(lvl_text, posy, s));
                
-                    posy -= 150;
+                    posy -= 70;
             }
             }
         }
@@ -53,8 +53,8 @@ public class GetLevels : MonoBehaviour
     {
         yield return 0;
         RectTransform lvl_text_rect = lvl_text.GetComponent<RectTransform>();
-        lvl_text_rect.offsetMax = new Vector2(0, posy);
-        lvl_text_rect.offsetMin = new Vector2(0, Content.GetComponent<RectTransform>().rect.height - posy - 50);
+        lvl_text_rect.offsetMax = new Vector2(-10, posy);
+        lvl_text_rect.offsetMin = new Vector2(0, Content.GetComponent<RectTransform>().rect.height + posy - 60);
         lvl_text.GetComponentInChildren<TextMeshProUGUI>().SetText(s);
     }
     public void GoToLevelEditor() {
