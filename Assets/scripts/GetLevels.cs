@@ -95,7 +95,7 @@ public class GetLevels : MonoBehaviour
     private IEnumerator DownloadFile(string Level, string File)
     {
         var uwr = new UnityWebRequest("https://www.cdprojektblue.com/levels/files/" + Level + "/" + File, UnityWebRequest.kHttpVerbGET);
-        string path = Path.Combine(Application.dataPath, "Levels/" + Level + "/" + File);
+        string path = Application.dataPath + "/Levels/" + Level + "/" + File;
         var dh = new DownloadHandlerFile(path)
         {
             removeFileOnAbort = true
