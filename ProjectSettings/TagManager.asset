@@ -11,6 +11,7 @@ TagManager:
   - BeatR
   - BeatB
   - Highscore
+  - GetLevel
   layers:
   - Default
   - TransparentFX

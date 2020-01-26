@@ -11,19 +11,22 @@ using TMPro;
 public class GetLevels : MonoBehaviour
 {
     public GameObject ButtonPrefab;
-    public GameObject Scrollview;
-    public GameObject Content;
+    public GameObject Scrollview1;
+    public GameObject Scrollview2;
+    public GameObject Scrollview3;
+    public GameObject Content1;
+    public GameObject Content2;
+    public GameObject Content3;
     public GameObject LevelInfo;
     public GameObject MainMenu;
     public GameObject GetLevelsMenu;
     public GameObject DownloadButton;
-
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(LevelsGet());
     }
-
+    private string[] results;
     private IEnumerator LevelsGet() {
         string GetLevelsURL = "https://www.cdprojektblue.com/levels/getlevels.php";
         UnityWebRequest lvl_get = UnityWebRequest.Get(GetLevelsURL);
@@ -36,27 +39,75 @@ public class GetLevels : MonoBehaviour
         {
             // Show results as text
             string result = lvl_get.downloadHandler.text;
-            string[] results = result.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
-            int posy = 0;
-            GameObject lvl_text;
-            foreach (string s in results)
-            {
-                    lvl_text = Instantiate(ButtonPrefab, new Vector3(Content.transform.position.x, Content.transform.position.y, Content.transform.position.z), Quaternion.identity, Content.transform);
-                RectTransform lvl_text_rect = lvl_text.GetComponent<RectTransform>();
-                lvl_text_rect.offsetMax = new Vector2(-10, posy);
-                lvl_text_rect.offsetMin = new Vector2(0, Content.GetComponent<RectTransform>().rect.height + posy - 60);
-                lvl_text.GetComponentInChildren<TextMeshProUGUI>().SetText(s);
-                lvl_text.GetComponent<Button>().onClick.AddListener(() => DisplayInfo(s));
-                posy -= 70;
-            }
+            results = result.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+            PlaceLevels(false);
             }
         }
+    private bool isactiveprev = true;
+    private void PlaceLevels(bool isactive)
+    {
+        if (isactive == isactiveprev)
+        {
+            return;
+        }
+        if (isactive == true)
+        {
+            Scrollview1.SetActive(false);
+            Scrollview2.SetActive(false);
+            Scrollview3.SetActive(true);
+        }
+        else {
+            Scrollview1.SetActive(true);
+            Scrollview2.SetActive(true);
+            Scrollview3.SetActive(false);
+        }
+        DestroyLevels();
+        int posy = 0;
+        GameObject lvl_text;
+            int i = 0;
+            foreach (string s in results)
+            {
+                if (i % 2 == 0 && isactive == false)
+                {
+                    lvl_text = Instantiate(ButtonPrefab, new Vector3(Content1.transform.position.x, Content1.transform.position.y, Content1.transform.position.z), Quaternion.identity, Content1.transform);
+                }
+                else if (isactive == false)
+                {
+                    lvl_text = Instantiate(ButtonPrefab, new Vector3(Content2.transform.position.x, Content2.transform.position.y, Content2.transform.position.z), Quaternion.identity, Content2.transform);
+                }
+                else
+                {
+                    lvl_text = Instantiate(ButtonPrefab, new Vector3(Content3.transform.position.x, Content3.transform.position.y, Content3.transform.position.z), Quaternion.identity, Content3.transform);
+                }
+                RectTransform lvl_text_rect = lvl_text.GetComponent<RectTransform>();
+                lvl_text_rect.offsetMax = new Vector2(-10, posy);
+                lvl_text_rect.offsetMin = new Vector2(0, Content1.GetComponent<RectTransform>().rect.height + posy - 60);
+                lvl_text.GetComponentInChildren<TextMeshProUGUI>().SetText(s);
+                lvl_text.GetComponent<Button>().onClick.AddListener(() => DisplayInfo(s));
+                lvl_text.tag = "GetLevel";
+                if (i % 2 != 0 || isactive == true)
+                {
+                    posy -= 70;
+                }
+                i++;
+            }
+        isactiveprev = isactive;
+        }
 
+    private void DestroyLevels() {
+            GameObject[] lvl_destroy;
+            lvl_destroy = GameObject.FindGameObjectsWithTag("GetLevel");
+            foreach (GameObject lvl in lvl_destroy)
+            {
+                Destroy(lvl);
+            }
+        }
     public void Back()
     {
         if (LevelInfo.activeSelf)
         {
             LevelInfo.SetActive(false);
+            PlaceLevels(false);
         }
         else
         {
@@ -67,10 +118,12 @@ public class GetLevels : MonoBehaviour
     private bool executed = false;
     private void DisplayInfo(string Level)
     {
+        PlaceLevels(true);
         if (!LevelInfo.activeSelf)
         {
             LevelInfo.SetActive(true);
         }
+        LevelInfo.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(Level);
         if (executed == false)
         {
             DownloadButton.GetComponent<Button>().onClick.AddListener(() => Download(Level));
@@ -83,7 +136,8 @@ public class GetLevels : MonoBehaviour
         }
     }
 
-    private void Download(string Level) {
+    private void Download(string Level)
+    {
         if (!Directory.Exists(Application.dataPath + "Levels/" + Level))
         {
             Directory.CreateDirectory(Application.dataPath + "Levels/" + Level);
@@ -94,6 +148,7 @@ public class GetLevels : MonoBehaviour
 
     private IEnumerator DownloadFile(string Level, string File)
     {
+        DownloadButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Downloading...");
         var uwr = new UnityWebRequest("https://www.cdprojektblue.com/levels/files/" + Level + "/" + File, UnityWebRequest.kHttpVerbGET);
         string path = Application.dataPath + "/Levels/" + Level + "/" + File;
         var dh = new DownloadHandlerFile(path)
@@ -105,7 +160,8 @@ public class GetLevels : MonoBehaviour
         if (uwr.isNetworkError || uwr.isHttpError)
             Debug.LogError(uwr.error);
         else
-            Debug.Log(File + "was successfully downloaded and saved to " + path);
+            Debug.Log(File + " was successfully downloaded and saved to " + path);
+        DownloadButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Downloaded");
     }
 
     public void GoToLevelEditor() {
