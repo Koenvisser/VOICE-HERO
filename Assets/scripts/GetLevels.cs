@@ -180,7 +180,7 @@ public class GetLevels : MonoBehaviour
     {
         SceneManager.LoadScene("Leveleditor");
     }
-    private float songlength;
+    private int levellength;
     private IEnumerator LoadpreviewText(string Level)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get("https://www.cdprojektblue.com/levels/files/" + Level + "/level.txt"))
@@ -194,11 +194,13 @@ public class GetLevels : MonoBehaviour
             for (int i = lines.Count - 1; i >= 0; i--)
             {
                 string line = lines[i];
+                int linevalue;
                 if (i == lines.Count - 1)
                 {
+                    int.TryParse(line, out linevalue);
                     RectTransform rt = PreviewContent.GetComponent<RectTransform>();
-                    rt.sizeDelta = new Vector2(rt.sizeDelta.x,40*songlength);
-                    Debug.Log(songlength);
+                    rt.sizeDelta = new Vector2(rt.sizeDelta.x,40 * linevalue);
+                    levellength = linevalue;
                 }
             }
             PreviewContent.transform.GetChild(0).gameObject.SetActive(false);
@@ -217,20 +219,24 @@ public class GetLevels : MonoBehaviour
             else
             {
                 song.clip = DownloadHandlerAudioClip.GetContent(www);
-                songlength = song.clip.length;
                 StartCoroutine(LoadpreviewText(Level));
                 song.Play();
             }
         }
     }
-
+    private float timer;
     private void Update()
     {
         if (song.isPlaying)
         {
-            float progress = song.time / song.clip.length;
+            timer += Time.deltaTime;
+            float progress = timer / ((levellength - 8)* 0.4f);
             LevelInfo.transform.GetChild(1).GetComponent<Slider>().value = progress;
-            PreviewContent.transform.parent.parent.gameObject.GetComponent<ScrollRect>().verticalNormalizedPosition = progress;
+            PreviewContent.transform.parent.parent.GetChild(0).gameObject.GetComponent<Scrollbar>().value = 1 - progress;
+            if (progress >= 1)
+            {
+                song.Stop();
+            }
         }
     }
 }
