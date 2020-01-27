@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1328,6 +1328,7 @@ GameObject:
   m_Component:
   - component: {fileID: 685719897}
   - component: {fileID: 685719896}
+  - component: {fileID: 685719898}
   m_Layer: 0
   m_Name: VoiceEngine
   m_TagString: Untagged
@@ -1361,6 +1362,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &685719898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 685719895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b1ed3f806cbf6940bbd5f5e8a9b0e2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &691721836
 GameObject:
   m_ObjectHideFlags: 0
@@ -2298,6 +2311,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2037213629}
     m_Modifications:
+    - target: {fileID: 1484903082257953204, guid: d308c2654ef292f42900952c5b8b0998,
+        type: 3}
+      propertyPath: m_Name
+      value: Player blue
+      objectReference: {fileID: 0}
     - target: {fileID: 1484903082257953194, guid: d308c2654ef292f42900952c5b8b0998,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2368,11 +2386,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1484903082257953204, guid: d308c2654ef292f42900952c5b8b0998,
-        type: 3}
-      propertyPath: m_Name
-      value: Player blue
-      objectReference: {fileID: 0}
     - target: {fileID: 1484903082257953206, guid: d308c2654ef292f42900952c5b8b0998,
         type: 3}
       propertyPath: gameManager
@@ -2403,6 +2416,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7606268137679630508, guid: f54bc4d692c41ab4b934ddda054ac106,
+        type: 3}
+      propertyPath: m_Name
+      value: End
+      objectReference: {fileID: 0}
     - target: {fileID: 7606268137679630504, guid: f54bc4d692c41ab4b934ddda054ac106,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2458,11 +2476,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7606268137679630508, guid: f54bc4d692c41ab4b934ddda054ac106,
-        type: 3}
-      propertyPath: m_Name
-      value: End
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f54bc4d692c41ab4b934ddda054ac106, type: 3}
 --- !u!1001 &1017018520
@@ -2472,6 +2485,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2037213629}
     m_Modifications:
+    - target: {fileID: 7104493097842373864, guid: 7e97aeb09ebbe0f46a25fb22870cbf42,
+        type: 3}
+      propertyPath: m_Name
+      value: Player red
+      objectReference: {fileID: 0}
     - target: {fileID: 7104493097842373861, guid: 7e97aeb09ebbe0f46a25fb22870cbf42,
         type: 3}
       propertyPath: m_Mesh
@@ -2546,11 +2564,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7104493097842373864, guid: 7e97aeb09ebbe0f46a25fb22870cbf42,
-        type: 3}
-      propertyPath: m_Name
-      value: Player red
       objectReference: {fileID: 0}
     - target: {fileID: 7104493097842373865, guid: 7e97aeb09ebbe0f46a25fb22870cbf42,
         type: 3}
@@ -4600,6 +4613,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2037213629}
     m_Modifications:
+    - target: {fileID: 7816123850930350606, guid: f44013a37724d3340b3e092cfe75b03a,
+        type: 3}
+      propertyPath: m_Name
+      value: Player yellow
+      objectReference: {fileID: 0}
+    - target: {fileID: 7816123850930350604, guid: f44013a37724d3340b3e092cfe75b03a,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1833039217}
     - target: {fileID: 273189289783797600, guid: f44013a37724d3340b3e092cfe75b03a,
         type: 3}
       propertyPath: scale
@@ -4695,16 +4718,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7816123850930350604, guid: f44013a37724d3340b3e092cfe75b03a,
-        type: 3}
-      propertyPath: gameManager
-      value: 
-      objectReference: {fileID: 1833039217}
-    - target: {fileID: 7816123850930350606, guid: f44013a37724d3340b3e092cfe75b03a,
-        type: 3}
-      propertyPath: m_Name
-      value: Player yellow
       objectReference: {fileID: 0}
     - target: {fileID: 7816123850930350607, guid: f44013a37724d3340b3e092cfe75b03a,
         type: 3}
