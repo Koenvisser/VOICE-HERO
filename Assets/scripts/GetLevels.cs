@@ -258,11 +258,11 @@ public class GetLevels : MonoBehaviour
             timer += Time.deltaTime;
             float progress = timer / (levellength * 0.1f);
             LevelInfo.transform.GetChild(1).GetComponent<Slider>().value = progress;
-            PreviewContent.transform.parent.parent.GetChild(0).gameObject.GetComponent<Scrollbar>().value = 1 - progress;
             if (progress >= 1)
             {
                 song.Stop();
             }
         }
+        PreviewContent.transform.parent.parent.GetChild(0).gameObject.GetComponent<Scrollbar>().value = 1 - LevelInfo.transform.GetChild(1).GetComponent<Slider>().value;
     }
 }

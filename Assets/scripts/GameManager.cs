@@ -42,6 +42,10 @@ public class GameManager : MonoBehaviour
         {
             SceneManager.LoadScene("Menu");
         }
+        if (levelname == "LevelEditor")
+        {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Level 1"));
+        }
         //get the folder location of the level that has been selected, which must contain a level.txt file and a song.wav file
         string foldername = Application.dataPath + "/Levels/" + levelname;
         Readfile(foldername + "/level.txt");
@@ -178,7 +182,7 @@ public class GameManager : MonoBehaviour
     {
         if (levelname == "LevelEditor")
         {
-            SceneManager.LoadScene("Leveleditor");
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Leveleditor"));
         }
         else
         {

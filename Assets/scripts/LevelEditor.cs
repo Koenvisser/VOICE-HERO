@@ -23,8 +23,12 @@ public class LevelEditor : MonoBehaviour
     public GameObject YellowButton;
     public GameObject RedButton;
     public GameObject BlueButton;
+    public GameObject Canvas;
+
     public AudioSource song;
+
     private string songlocation = "";
+    private bool testing = false;
 
     private IEnumerator ImportAudio(string songlocation, AudioSource audiosource) {
         using (UnityWebRequest www = UnityWebRequestMultimedia.GetAudioClip(songlocation, AudioType.WAV))
@@ -99,6 +103,18 @@ public class LevelEditor : MonoBehaviour
     public void TestLevel() {
         CopyFiles(Application.dataPath + "/Levels/LevelEditor/");
         PlayerPrefs.SetString("currentLevel", "LevelEditor");
+        SceneManager.LoadScene("Level 1", LoadSceneMode.Additive);
+        StartCoroutine(LoadScene());
+    }
+
+    private IEnumerator LoadScene() {
+        yield return 0;
+        testing = true;
+        Canvas.transform.parent.GetChild(0).gameObject.GetComponent<AudioListener>().enabled = false;
+        for (int i = 1; i < 5; i++)
+        {
+            Canvas.transform.parent.GetChild(i).gameObject.SetActive(false);
+        }
     }
 
     public void Reset() {
@@ -208,6 +224,16 @@ public class LevelEditor : MonoBehaviour
         if (song.isPlaying)
         {
             AudioLine.GetComponent<RectTransform>().localPosition = new Vector2(song.time * 120, AudioLine.GetComponent<RectTransform>().localPosition.y) ;
+        }
+        if (testing == true && SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Leveleditor"))
+        {
+            SceneManager.UnloadSceneAsync("Level 1");
+            Canvas.transform.parent.GetChild(0).gameObject.GetComponent<AudioListener>().enabled = true;
+            for (int i = 1; i < 5; i++)
+            {
+                Canvas.transform.parent.GetChild(i).gameObject.SetActive(true);
+            }
+            testing = false;
         }
     }
 }
