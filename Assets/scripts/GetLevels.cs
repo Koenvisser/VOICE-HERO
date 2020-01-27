@@ -180,28 +180,54 @@ public class GetLevels : MonoBehaviour
     {
         SceneManager.LoadScene("Leveleditor");
     }
-    private int levellength;
+    private int levellength = 0;
     private IEnumerator LoadpreviewText(string Level)
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Get("https://www.cdprojektblue.com/levels/files/" + Level + "/level.txt"))
         {
             yield return webRequest.SendWebRequest();
+            int linevalue, left = 0, top;
+            string line;
+            GameObject CurrentColor = PreviewBluePrefab;
+            GameObject Previewcircle;
+            RectTransform rect;
             string longStringFromFile = webRequest.downloadHandler.text;
             List<string> lines = new List<string>(
-            longStringFromFile
-            .Split(new string[] { "\r", "\n" },
-            StringSplitOptions.RemoveEmptyEntries));
+            longStringFromFile.Split(new string[] { "\r", "\n" },StringSplitOptions.RemoveEmptyEntries));
             for (int i = lines.Count - 1; i >= 0; i--)
             {
-                string line = lines[i];
-                int linevalue;
+                line = lines[i];
                 if (i == lines.Count - 1)
                 {
                     int.TryParse(line, out linevalue);
                     RectTransform rt = PreviewContent.GetComponent<RectTransform>();
-                    rt.sizeDelta = new Vector2(rt.sizeDelta.x,40 * linevalue);
-                    levellength = linevalue;
+                    rt.sizeDelta = new Vector2(rt.sizeDelta.x, 80 * (linevalue - 8));
+                    levellength = linevalue - 8;
                 }
+                else if (line == "end")
+                {
+                    CurrentColor = PreviewBluePrefab;
+                    left = 40;
+                }
+                else if (line == "b")
+                {
+                    CurrentColor = PreviewYellowPrefab;
+                    left = -40;
+                }
+                else if (line == "y")
+                {
+                    CurrentColor = PreviewRedPrefab;
+                    left = 0;
+                }
+                else if (line != "r")
+                {
+                    int.TryParse(line, out linevalue);
+                    Previewcircle = Instantiate(CurrentColor, new Vector3(PreviewContent.transform.position.x, PreviewContent.transform.position.y, PreviewContent.transform.position.z), Quaternion.identity, PreviewContent.transform);
+                    rect = Previewcircle.GetComponent<RectTransform>();
+                    top = (linevalue - 8) * -80 + 40;
+                    rect.anchoredPosition = new Vector2(left,top);
+                }
+
             }
             PreviewContent.transform.GetChild(0).gameObject.SetActive(false);
         }
@@ -227,10 +253,10 @@ public class GetLevels : MonoBehaviour
     private float timer;
     private void Update()
     {
-        if (song.isPlaying)
+        if (song.isPlaying && levellength != 0)
         {
             timer += Time.deltaTime;
-            float progress = timer / ((levellength - 8)* 0.4f);
+            float progress = timer / (levellength * 0.1f);
             LevelInfo.transform.GetChild(1).GetComponent<Slider>().value = progress;
             PreviewContent.transform.parent.parent.GetChild(0).gameObject.GetComponent<Scrollbar>().value = 1 - progress;
             if (progress >= 1)
