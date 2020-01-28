@@ -11,6 +11,7 @@ public class LevelSelectScript : MonoBehaviour
 {
     public GameObject myPrefab;
     public GameObject MainCamera;
+    public GameObject Content;
     bool Executed = false;
     // This script will instantiate the Prefab when the game starts and add text and an onclick event
     public void AddText()
@@ -28,7 +29,7 @@ public class LevelSelectScript : MonoBehaviour
                     string dir2 = dir.Replace(Application.dataPath + "/levels\\", "");
 
                     //create button
-                    GameObject button = Instantiate(myPrefab, new Vector3(transform.position.x, transform.position.y + posy, transform.position.z), Quaternion.identity, transform);
+                    GameObject button = Instantiate(myPrefab, new Vector3(Content.transform.position.x, Content.transform.position.y + posy, Content.transform.position.z), Quaternion.identity, Content.transform);
 
                     //set the text of the button to the name of the level
                     button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(dir2);
