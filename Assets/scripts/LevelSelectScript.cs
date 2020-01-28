@@ -19,43 +19,52 @@ public class LevelSelectScript : MonoBehaviour
         //only execute once
         if (Executed == false)
         {
-            int posy = 80;
+            int posy = 70;
+            List<string> levelnames = new List<string>();
             string[] directories = Directory.GetDirectories(Application.dataPath + "/levels");
             foreach (string dir in directories)
             {
                 if(File.Exists(dir + "/level.txt") && File.Exists(dir + "/song.wav") && !dir.Contains("LevelEditor"))
                 {
+                    
                     //get name of level
                     string dir2 = dir.Replace(Application.dataPath + "/levels\\", "");
-
-                    //create button
-                    GameObject button = Instantiate(myPrefab, new Vector3(Content.transform.position.x, Content.transform.position.y + posy, Content.transform.position.z), Quaternion.identity, Content.transform);
-
-                    //set the text of the button to the name of the level
-                    button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(dir2);
-
-                    //add an onclick event to the button to play the level when the button is clicked
-                    button.GetComponent<Button>().onClick.AddListener(() => PlayLevel(dir2));
-
-                    //create eventtriggers for pointerenter and pointerexit for the button to display the highscores for the level when hovering over the button, 
-                    //and displaying the main highscores when not hovering over the button anymore
-                    EventTrigger.Entry eventtype = new EventTrigger.Entry();
-                    eventtype.eventID = EventTriggerType.PointerEnter;
-                    eventtype.callback.AddListener((eventData) => { if (MainCamera.activeSelf) { MainCamera.GetComponent<ScoreSetGet>().GetHighscoresbylevel(dir2); } });
-                    EventTrigger.Entry eventtype2 = new EventTrigger.Entry();
-                    eventtype2.eventID = EventTriggerType.PointerExit;
-                    eventtype2.callback.AddListener((eventData) => { if (MainCamera.activeSelf) { MainCamera.GetComponent<ScoreSetGet>().GetHighscores(); } });
-
-                    //add the eventtriggers to the button
-                    button.AddComponent<EventTrigger>();
-                    button.GetComponent<EventTrigger>().triggers.Add(eventtype);
-                    button.GetComponent<EventTrigger>().triggers.Add(eventtype2);
-
-                    //lower the position y value so the next button will be under this button
-                    posy -= 50;
+                    levelnames.Add(dir2);                    
                 }
             }
+            posy = 24 * levelnames.Count;
+            foreach (string levelname in levelnames)
+            {
+
+                //create button
+                GameObject button = Instantiate(myPrefab, new Vector3(Content.transform.position.x + Content.GetComponent<RectTransform>().rect.width * 0.5f, Content.transform.position.y - Content.GetComponent<RectTransform>().rect.height * 0.5f + posy, Content.transform.position.z), Quaternion.identity, Content.transform);
+                Debug.Log(Content.transform.position.x);
+                Debug.Log(Content.transform.position.y);
+                //set the text of the button to the name of the level
+                button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(levelname);
+
+                //add an onclick event to the button to play the level when the button is clicked
+                button.GetComponent<Button>().onClick.AddListener(() => PlayLevel(levelname));
+
+                //create eventtriggers for pointerenter and pointerexit for the button to display the highscores for the level when hovering over the button, 
+                //and displaying the main highscores when not hovering over the button anymore
+                EventTrigger.Entry eventtype = new EventTrigger.Entry();
+                eventtype.eventID = EventTriggerType.PointerEnter;
+                eventtype.callback.AddListener((eventData) => { if (MainCamera.activeSelf) { MainCamera.GetComponent<ScoreSetGet>().GetHighscoresbylevel(levelname); } });
+                EventTrigger.Entry eventtype2 = new EventTrigger.Entry();
+                eventtype2.eventID = EventTriggerType.PointerExit;
+                eventtype2.callback.AddListener((eventData) => { if (MainCamera.activeSelf) { MainCamera.GetComponent<ScoreSetGet>().GetHighscores(); } });
+
+                //add the eventtriggers to the button
+                button.AddComponent<EventTrigger>();
+                button.GetComponent<EventTrigger>().triggers.Add(eventtype);
+                button.GetComponent<EventTrigger>().triggers.Add(eventtype2);
+
+                //lower the position y value so the next button will be under this button
+                posy -= 50;
+            }
             Executed = true;
+            Content.GetComponent<RectTransform>().offsetMin = new Vector2(Content.GetComponent<RectTransform>().offsetMin.x, Content.GetComponent<RectTransform>().offsetMin.y - 50 * (levelnames.Count -  3));
         }
     }
     public void PlayLevel(string level)
