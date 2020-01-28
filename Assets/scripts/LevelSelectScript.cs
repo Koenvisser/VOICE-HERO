@@ -19,20 +19,20 @@ public class LevelSelectScript : MonoBehaviour
         //only execute once
         if (Executed == false)
         {
-            int posy = 70;
+            float posy = 0;
             List<string> levelnames = new List<string>();
-            string[] directories = Directory.GetDirectories(Application.dataPath + "/levels");
+            string[] directories = Directory.GetDirectories(Application.dataPath + "/Resources/levels");
             foreach (string dir in directories)
             {
                 if(File.Exists(dir + "/level.txt") && File.Exists(dir + "/song.wav") && !dir.Contains("LevelEditor"))
                 {
                     
                     //get name of level
-                    string dir2 = dir.Replace(Application.dataPath + "/levels\\", "");
+                    string dir2 = dir.Replace(Application.dataPath + "/Resources/levels\\", "");
                     levelnames.Add(dir2);                    
                 }
             }
-            posy = 24 * levelnames.Count;
+            posy = -24 * levelnames.Count;
             foreach (string levelname in levelnames)
             {
 
@@ -61,7 +61,7 @@ public class LevelSelectScript : MonoBehaviour
                 button.GetComponent<EventTrigger>().triggers.Add(eventtype2);
 
                 //lower the position y value so the next button will be under this button
-                posy -= 50;
+                posy -= button.GetComponent<RectTransform>().rect.height;
             }
             Executed = true;
             Content.GetComponent<RectTransform>().offsetMin = new Vector2(Content.GetComponent<RectTransform>().offsetMin.x, Content.GetComponent<RectTransform>().offsetMin.y - 50 * (levelnames.Count -  3));

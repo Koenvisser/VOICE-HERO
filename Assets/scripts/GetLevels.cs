@@ -150,9 +150,9 @@ public class GetLevels : MonoBehaviour
 
     private void Download(string Level)
     {
-        if (!Directory.Exists(Application.dataPath + "Levels/" + Level))
+        if (!Directory.Exists(Application.dataPath + "/Resources/Levels/" + Level))
         {
-            Directory.CreateDirectory(Application.dataPath + "Levels/" + Level);
+            Directory.CreateDirectory(Application.dataPath + "/Resources/Levels/" + Level);
         }
         StartCoroutine(DownloadFile(Level, "level.txt"));
         StartCoroutine(DownloadFile(Level, "song.wav"));
@@ -162,7 +162,7 @@ public class GetLevels : MonoBehaviour
     {
         DownloadButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Downloading...");
         var uwr = new UnityWebRequest("https://www.cdprojektblue.com/levels/files/" + Level + "/" + File, UnityWebRequest.kHttpVerbGET);
-        string path = Application.dataPath + "/Levels/" + Level + "/" + File;
+        string path = Application.dataPath + "/Resources/Levels/" + Level + "/" + File;
         var dh = new DownloadHandlerFile(path)
         {
             removeFileOnAbort = true

@@ -101,7 +101,7 @@ public class LevelEditor : MonoBehaviour
         }
     }
     public void TestLevel() {
-        CopyFiles(Application.dataPath + "/Levels/LevelEditor/");
+        CopyFiles(Application.dataPath + "/Resources/Levels/LevelEditor/");
         PlayerPrefs.SetString("currentLevel", "LevelEditor");
         SceneManager.LoadScene("Level 1", LoadSceneMode.Additive);
         StartCoroutine(LoadScene());
@@ -122,7 +122,7 @@ public class LevelEditor : MonoBehaviour
     }
 
     public void SaveLevel() {
-        string path = Application.dataPath + "/Levels/" + NameInputField.GetComponent<TMP_InputField>().text + "/";
+        string path = Application.dataPath + "/Resources/Levels/" + NameInputField.GetComponent<TMP_InputField>().text + "/";
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);
@@ -191,7 +191,7 @@ public class LevelEditor : MonoBehaviour
     }
 
     private IEnumerator Upload() {
-        string textpath = Application.dataPath + "/Levels/" + NameInputField.GetComponent<TMP_InputField>().text + "/level.txt";
+        string textpath = Application.dataPath + "/Resources/Levels/" + NameInputField.GetComponent<TMP_InputField>().text + "/level.txt";
         if (!File.Exists(textpath))
         {
             SaveLevel();
