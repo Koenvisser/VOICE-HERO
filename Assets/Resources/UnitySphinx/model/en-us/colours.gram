@@ -8,4 +8,4 @@ grammar digits;
 
 public <basicCmd> = <numbers>;
 
-<numbers> = (blue | red | yellow);
+<numbers> = (blue | red | yellow | purple | orange | green | brown);

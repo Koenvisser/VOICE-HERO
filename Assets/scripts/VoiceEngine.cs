@@ -8,19 +8,8 @@ using UnityEngine.Windows.Speech;
 public class VoiceEngine : MonoBehaviour
 {
     string str;
-    /*
-    private KeywordRecognizer keywordRecognizer;
-    private Dictionary<string, Action> actions = new Dictionary<string, Action>();
-    */
     void Start()
     {
-        /*actions.Add("yellow", Yellow);
-        actions.Add("red", Red);
-        actions.Add("blue", Blue);
-
-        keywordRecognizer = new KeywordRecognizer(actions.Keys.ToArray());
-        keywordRecognizer.OnPhraseRecognized += Recognized;
-        keywordRecognizer.Start();*/
         if (UnitySphinx.IsInitialized())
             UnitySphinx.Stop();
         UnitySphinx.Init();
@@ -32,12 +21,7 @@ public class VoiceEngine : MonoBehaviour
         str = UnitySphinx.DequeueString();
         if (UnitySphinx.GetSearchModel() == "kws")
         {
-            //print("listening for keyword");
-            //if (str != "")
-           // {
                 UnitySphinx.SetSearchModel(UnitySphinx.SearchModel.jsgf);
-                print(str);
-            //}
         }
         else if (UnitySphinx.GetSearchModel() == "jsgf")
         {
@@ -75,12 +59,6 @@ public class VoiceEngine : MonoBehaviour
             }
         }
     }
-    /*
-    private void Recognized(PhraseRecognizedEventArgs speech)
-    {
-        Debug.Log(speech.text);
-        actions[speech.text].Invoke();
-    }*/
 
     private void Yellow()
     {
