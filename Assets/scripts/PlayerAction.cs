@@ -63,16 +63,16 @@ public class PlayerAction : MonoBehaviour
     // pushes the button down on press
     void Pressed()
     {
-        scale.localScale = new Vector3(1, 0.2f, 1);
-        scale.localPosition -= new Vector3(0, 0.05f, 0);
+        scale.localScale = new Vector3(1, 1, 1);
+        scale.localPosition -= new Vector3(0, 0, 1);
         Invoke("ButtonUp", 0.1f);
     }
 
     // brings the button back to normal
     void ButtonUp()
     {
-        scale.localScale = new Vector3(1, 0.25f, 1);
-        scale.localPosition += new Vector3(0, 0.05f, 0);
+        scale.localScale = new Vector3(1, 1, 1);
+        scale.localPosition += new Vector3(0, 0, 1);
     }
 
     // Here a fire is instantiated on the player button if a correct hit is scored the fires destroy themselfs
