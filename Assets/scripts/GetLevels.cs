@@ -25,6 +25,8 @@ public class GetLevels : MonoBehaviour
     public GameObject PreviewYellowPrefab;
     public GameObject PreviewRedPrefab;
     public GameObject PreviewBluePrefab;
+    public GameObject Background1;
+    public GameObject Background2;
     public AudioSource song;
     // Start is called before the first frame update
     private void Start()
@@ -121,6 +123,8 @@ public class GetLevels : MonoBehaviour
         else
         {
             MainMenu.SetActive(true);
+            Background1.SetActive(false);
+            Background2.SetActive(true);
             GetLevelsMenu.SetActive(false);
         }
     }
