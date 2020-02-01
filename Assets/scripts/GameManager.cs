@@ -59,7 +59,6 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Debug.Log("works");
             if (GameIsPaused)
             {
                 Resume();

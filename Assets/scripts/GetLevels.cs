@@ -118,6 +118,7 @@ public class GetLevels : MonoBehaviour
         if (LevelInfo.activeSelf)
         {
             LevelInfo.SetActive(false);
+            song.Stop();
             PlaceLevels(false);
         }
         else

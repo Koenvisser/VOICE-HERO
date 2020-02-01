@@ -33,7 +33,6 @@ public class LevelSelectScript : MonoBehaviour
                 }
             }
             Content.GetComponent<RectTransform>().offsetMin = new Vector2(Content.GetComponent<RectTransform>().offsetMin.x, Content.GetComponent<RectTransform>().offsetMin.y - 50 * (levelnames.Count - 4));
-            Debug.Log(Content.GetComponent<RectTransform>().rect.height);
             foreach (string levelname in levelnames)
             {
 
