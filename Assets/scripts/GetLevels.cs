@@ -71,7 +71,7 @@ public class GetLevels : MonoBehaviour
             Scrollview2.SetActive(true);
             Scrollview3.SetActive(false);
         }
-        DestroyLevels();
+        Destroy("GetLevel");
         int posy = 0;
         GameObject lvl_text;
         int i = 0;
@@ -104,10 +104,10 @@ public class GetLevels : MonoBehaviour
         isactiveprev = isactive;
     }
 
-    private void DestroyLevels()
+    private void Destroy(string tag)
     {
         GameObject[] lvl_destroy;
-        lvl_destroy = GameObject.FindGameObjectsWithTag("GetLevel");
+        lvl_destroy = GameObject.FindGameObjectsWithTag(tag);
         foreach (GameObject lvl in lvl_destroy)
         {
             Destroy(lvl);
@@ -185,9 +185,15 @@ public class GetLevels : MonoBehaviour
     {
         SceneManager.LoadScene("Leveleditor");
     }
+
     private int levellength = 0;
+    private bool previewloaded = false;
     private IEnumerator LoadpreviewText(string Level)
     {
+        if (previewloaded == true)
+        {
+            Destroy("PreviewCircle");
+        }
         using (UnityWebRequest webRequest = UnityWebRequest.Get("https://www.cdprojektblue.com/levels/files/" + Level + "/level.txt"))
         {
             yield return webRequest.SendWebRequest();
@@ -231,11 +237,13 @@ public class GetLevels : MonoBehaviour
                     rect = Previewcircle.GetComponent<RectTransform>();
                     top = (linevalue - 8) * -80 + 40;
                     rect.anchoredPosition = new Vector2(left,top);
+                    Previewcircle.tag = "PreviewCircle";
                 }
 
             }
             PreviewContent.transform.GetChild(0).gameObject.SetActive(false);
         }
+        previewloaded = true;
     }
 
     private IEnumerator LoadAudio(string Level)
@@ -250,8 +258,10 @@ public class GetLevels : MonoBehaviour
             else
             {
                 song.clip = DownloadHandlerAudioClip.GetContent(www);
+                song.time = 0;
                 StartCoroutine(LoadpreviewText(Level));
                 song.Play();
+                LevelInfo.transform.GetChild(1).gameObject.SetActive(true);
             }
         }
     }

@@ -12,6 +12,7 @@ TagManager:
   - BeatB
   - Highscore
   - GetLevel
+  - PreviewCircle
   layers:
   - Default
   - TransparentFX

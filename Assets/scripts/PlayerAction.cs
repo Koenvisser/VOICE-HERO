@@ -10,7 +10,6 @@ public class PlayerAction : MonoBehaviour
     public string Colour;
     public string Key;
     // start of the voice recognision sofware
-    bool yellow, red, blue = false;
     public GameObject Fire;
     public static PlayerAction playeraction;
 
