@@ -32,17 +32,15 @@ public class LevelSelectScript : MonoBehaviour
                     levelnames.Add(dir2);                    
                 }
             }
-            posy = -24 * levelnames.Count;
+            Content.GetComponent<RectTransform>().offsetMin = new Vector2(Content.GetComponent<RectTransform>().offsetMin.x, Content.GetComponent<RectTransform>().offsetMin.y - 50 * (levelnames.Count - 4));
+            Debug.Log(Content.GetComponent<RectTransform>().rect.height);
             foreach (string levelname in levelnames)
             {
 
                 //create button
-                GameObject button = Instantiate(myPrefab, new Vector3(Content.transform.position.x + Content.GetComponent<RectTransform>().rect.width * 0.5f, Content.transform.position.y - Content.GetComponent<RectTransform>().rect.height * 0.5f + posy, Content.transform.position.z), Quaternion.identity, Content.transform);
-                Debug.Log(Content.transform.position.x);
-                Debug.Log(Content.transform.position.y);
+                GameObject button = Instantiate(myPrefab, new Vector3(Content.transform.position.x, Content.transform.position.y, Content.transform.position.z), Quaternion.identity, Content.transform);
                 //set the text of the button to the name of the level
                 button.transform.GetChild(0).GetComponent<TextMeshProUGUI>().SetText(levelname);
-
                 //add an onclick event to the button to play the level when the button is clicked
                 button.GetComponent<Button>().onClick.AddListener(() => PlayLevel(levelname));
 
@@ -60,13 +58,15 @@ public class LevelSelectScript : MonoBehaviour
                 button.GetComponent<EventTrigger>().triggers.Add(eventtype);
                 button.GetComponent<EventTrigger>().triggers.Add(eventtype2);
 
+                button.GetComponent<RectTransform>().offsetMax = new Vector2(0,posy);
+                button.GetComponent<RectTransform>().offsetMin = new Vector2(0,Content.GetComponent<RectTransform>().rect.height - 50 + posy);
                 //lower the position y value so the next button will be under this button
-                posy -= button.GetComponent<RectTransform>().rect.height;
+                posy -= 50;
             }
             Executed = true;
-            Content.GetComponent<RectTransform>().offsetMin = new Vector2(Content.GetComponent<RectTransform>().offsetMin.x, Content.GetComponent<RectTransform>().offsetMin.y - 50 * (levelnames.Count -  3));
         }
     }
+
     public void PlayLevel(string level)
     {
         //Sets the currentlevel value in the playerprefs file to the current level in order to get this value in the game
