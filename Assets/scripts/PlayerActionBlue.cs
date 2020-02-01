@@ -62,10 +62,6 @@ public class PlayerActionBlue : MonoBehaviour
                 FindObjectOfType<Streak>().streak = 0;
             }
         }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            FindObjectOfType<GameManager>().Pause();
-        }
     }
 
     // pushes the button down on press

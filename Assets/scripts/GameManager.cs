@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     // Is used to manage the game
     // variables are to see if the game is paused or not
     // references to the audioplayer and pausemenu UI
-    public static bool GameIsPaused = false;
+    public bool GameIsPaused = false;
     public AudioSource song;
     public GameObject pauseMenu;
     public GameObject EndScreen;
@@ -55,6 +55,22 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("works");
+            if (GameIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                StopGame();
+            }
+        }
+    }
+
     //load the audio using unitywebrequest to stream the audio file
     IEnumerator LoadAudio(string songlocation, AudioSource audiosource)
     {
@@ -76,19 +92,6 @@ public class GameManager : MonoBehaviour
                 }
             }
             audiosource.Play();
-        }
-    }
-
-    // This method is called when the esc button is pressed it can either start or stop a pause screen
-    public void Pause()
-    {
-        if (GameIsPaused)
-        {
-            Resume();
-        }
-        else
-        {
-            StopGame();
         }
     }
 
