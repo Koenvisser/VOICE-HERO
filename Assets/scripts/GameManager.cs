@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
 using TMPro;
 using System.IO;
 using System.Linq;
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
     public GameObject GameScore;
     public GameObject EndScore;
     public GameObject ScoreName;
+    public GameObject Video;
 
     public List<string> levelStringList = new List<string>();
     private string levelname = "";
@@ -102,6 +104,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         song.UnPause();
         GameIsPaused = false;
+        Video.GetComponent<VideoPlayer>().Play();
     }
 
     // If we are playing but want to pause we activate the pause menu UI, set the game time still and pause the song
@@ -112,6 +115,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         song.Pause();
         GameIsPaused = true;
+        Video.GetComponent<VideoPlayer>().Pause();
     }
 
     // When we go to the main menu from the pause scene we first need to reset the gametime, indacate the game is not paused and stop the song.

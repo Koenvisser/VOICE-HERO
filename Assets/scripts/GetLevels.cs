@@ -147,10 +147,11 @@ public class GetLevels : MonoBehaviour
         }
         else
         {
-            Debug.Log("execute");
+            song.clip = null;
             DownloadButton.GetComponent<Button>().onClick.RemoveAllListeners();
             DownloadButton.GetComponent<Button>().onClick.AddListener(() => Download(Level));
-            PreviewContent.transform.GetChild(0).gameObject.SetActive(true);
+            PreviewContent.transform.parent.GetChild(1).gameObject.SetActive(true);
+            LevelInfo.transform.GetChild(1).gameObject.SetActive(false);
             Destroy("PreviewCircle");
         }
 
@@ -212,7 +213,7 @@ public class GetLevels : MonoBehaviour
                 }
 
             }
-            PreviewContent.transform.GetChild(0).gameObject.SetActive(false);
+            PreviewContent.transform.parent.GetChild(1).gameObject.SetActive(false);
         }
         previewloaded = true;
     }

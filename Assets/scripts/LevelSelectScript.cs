@@ -12,6 +12,9 @@ public class LevelSelectScript : MonoBehaviour
     public GameObject myPrefab;
     public GameObject MainCamera;
     public GameObject Content;
+    public GameObject Levelselect;
+    public GameObject Highscores;
+    public GameObject Loadscreen;
     bool Executed = false;
     // This script will instantiate the Prefab when the game starts and add text and an onclick event
     public void AddText()
@@ -70,10 +73,13 @@ public class LevelSelectScript : MonoBehaviour
     {
         //Sets the currentlevel value in the playerprefs file to the current level in order to get this value in the game
         PlayerPrefs.SetString("currentLevel", level);
-        //loads the main game
-        SceneManager.LoadScene("Level 1");
+        Levelselect.SetActive(false);
+        Loadscreen.SetActive(true);
+        Highscores.SetActive(false);
+        Loadscreen.GetComponent<LoadingScript>().LoadLevel();
     }
-    
+
+
 
     public void Quit()
     {

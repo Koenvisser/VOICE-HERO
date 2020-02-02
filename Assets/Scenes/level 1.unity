@@ -4164,6 +4164,7 @@ MonoBehaviour:
   GameScore: {fileID: 1131771216}
   EndScore: {fileID: 1357967003}
   ScoreName: {fileID: 314156028}
+  Video: {fileID: 1840112038}
   levelStringList: []
 --- !u!1 &1840112038
 GameObject:
@@ -4192,7 +4193,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1840112038}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: 56385d7557402ba438d6d0966b4babb9, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 565f6d71f58389e49bca4ba4199d5d0a, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -4215,7 +4216,7 @@ VideoPlayer:
   m_ControlledAudioTrackCount: 1
   m_PlayOnAwake: 1
   m_SkipOnDrop: 1
-  m_Looping: 0
+  m_Looping: 1
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
 --- !u!23 &1840112040
