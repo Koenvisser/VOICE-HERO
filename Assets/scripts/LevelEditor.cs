@@ -74,10 +74,9 @@ public class LevelEditor : MonoBehaviour
     private List<int> bluelist = new List<int>();
     private void OnContentClick(int colour)
     {
-        float mousepos = (Content.GetComponent<RectTransform>().rect.size.x - Viewport.GetComponent<RectTransform>().rect.size.x) * scrollbar.GetComponent<Scrollbar>().value + 1.15f * (Input.mousePosition.x - 40);
+        float mousepos = (Content.GetComponent<RectTransform>().rect.size.x - Viewport.GetComponent<RectTransform>().rect.size.x) * scrollbar.GetComponent<Scrollbar>().value + Input.mousePosition.x / Screen.width * Canvas.GetComponent<RectTransform>().rect.size.x;
         int left = (int)mousepos / 120;
-        Debug.Log(left + 8);
-        mousepos = 120 * left - Viewport.transform.position.x + 66.7f;
+        mousepos = 120 * left - Viewport.transform.position.x + 60;
         if (colour == 1)
         {
             GameObject Circle = Instantiate(YellowPrefab, new Vector3(0, 0, YellowButton.transform.position.z), Quaternion.identity, YellowButton.transform);
