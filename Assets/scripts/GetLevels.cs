@@ -147,52 +147,23 @@ public class GetLevels : MonoBehaviour
         }
         else
         {
+            Debug.Log("execute");
             DownloadButton.GetComponent<Button>().onClick.RemoveAllListeners();
             DownloadButton.GetComponent<Button>().onClick.AddListener(() => Download(Level));
+            PreviewContent.transform.GetChild(0).gameObject.SetActive(true);
+            Destroy("PreviewCircle");
         }
+
         StartCoroutine(LoadAudio(Level));
     }
-
-    private void Download(string Level)
-    {
-        if (!Directory.Exists(Application.dataPath + "/Resources/Levels/" + Level))
-        {
-            Directory.CreateDirectory(Application.dataPath + "/Resources/Levels/" + Level);
-        }
-        StartCoroutine(DownloadFile(Level, "level.txt"));
-        StartCoroutine(DownloadFile(Level, "song.wav"));
-    }
-
-    private IEnumerator DownloadFile(string Level, string File)
-    {
-        DownloadButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Downloading...");
-        var uwr = new UnityWebRequest("https://www.cdprojektblue.com/levels/files/" + Level + "/" + File, UnityWebRequest.kHttpVerbGET);
-        string path = Application.dataPath + "/Resources/Levels/" + Level + "/" + File;
-        var dh = new DownloadHandlerFile(path)
-        {
-            removeFileOnAbort = true
-        };
-        uwr.downloadHandler = dh;
-        yield return uwr.SendWebRequest();
-        if (uwr.isNetworkError || uwr.isHttpError)
-            Debug.LogError(uwr.error);
-        else
-            Debug.Log(File + " was successfully downloaded and saved to " + path);
-        DownloadButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Downloaded");
-    }
-
-    public void GoToLevelEditor()
-    {
-        SceneManager.LoadScene("Leveleditor");
-    }
-
+ 
     private int levellength = 0;
     private bool previewloaded = false;
     private IEnumerator LoadpreviewText(string Level)
     {
         if (previewloaded == true)
-        {
-            Destroy("PreviewCircle");
+        { 
+            LevelInfo.transform.GetChild(1).GetComponent<Slider>().value = 0;
         }
         using (UnityWebRequest webRequest = UnityWebRequest.Get("https://www.cdprojektblue.com/levels/files/" + Level + "/level.txt"))
         {
@@ -265,6 +236,40 @@ public class GetLevels : MonoBehaviour
             }
         }
     }
+
+    private void Download(string Level)
+    {
+        if (!Directory.Exists(Application.dataPath + "/Resources/Levels/" + Level))
+        {
+            Directory.CreateDirectory(Application.dataPath + "/Resources/Levels/" + Level);
+        }
+        StartCoroutine(DownloadFile(Level, "level.txt"));
+        StartCoroutine(DownloadFile(Level, "song.wav"));
+    }
+
+    private IEnumerator DownloadFile(string Level, string File)
+    {
+        DownloadButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Downloading...");
+        var uwr = new UnityWebRequest("https://www.cdprojektblue.com/levels/files/" + Level + "/" + File, UnityWebRequest.kHttpVerbGET);
+        string path = Application.dataPath + "/Resources/Levels/" + Level + "/" + File;
+        var dh = new DownloadHandlerFile(path)
+        {
+            removeFileOnAbort = true
+        };
+        uwr.downloadHandler = dh;
+        yield return uwr.SendWebRequest();
+        if (uwr.isNetworkError || uwr.isHttpError)
+            Debug.LogError(uwr.error);
+        else
+            Debug.Log(File + " was successfully downloaded and saved to " + path);
+        DownloadButton.GetComponentInChildren<TextMeshProUGUI>().SetText("Downloaded");
+    }
+
+    public void GoToLevelEditor()
+    {
+        SceneManager.LoadScene("Leveleditor");
+    }
+
     private float timer;
     private void Update()
     {
